@@ -1,0 +1,100 @@
+const axios = require("axios");
+const { Pokemon, Types } = require("../db");
+const db = require("../db");
+
+
+//función que organiza la data de todos los personajes que llega de la api
+const cleanArray = (arr) => {
+  const clean = arr.map((e) => {
+    return {
+      id: e.id,
+      name: e.name,
+      sprites: e.sprites.front_default, 
+      life: e.stats[0].base_stat,
+      attack: e.stats[1].base_stat,
+      defense: e.stats[2].base_stat,
+      speed: e.stats[5].base_stat,
+      height: e.height,
+      weight: e.weight,
+      types: e.types.map((t) => t.type.name),
+    };
+  });
+  return clean;
+};
+
+const getAllPokemons = async () => {
+  //buscar BDD
+  const dbPokemons = await Pokemon.findAll({
+    include: {
+      model: Types,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+  });
+
+  //buscar api
+  const apiRaw = (
+    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0`)
+  ).data.results;
+
+  const pokemonDetails = await Promise.all(
+    apiRaw.map(async (e) => {
+      const response = (await axios.get(e.url)).data;
+      return response;
+    })
+  );
+
+  const apiPokemons = cleanArray(pokemonDetails);
+
+  return [...dbPokemons, ...apiPokemons];
+};
+
+//POKEMONS BY NAME FUNCIONA. BUSCA EN BDD, BUSCA EN API,TRAE ALGUNOS PERSONAJES Y OTROS NO LOS TRAE
+//ARROJA ERROR 400 "message": "read ECONNRESET"
+const getPokemonsByName = async (name) => {
+  let plainName = name.toLowerCase();
+
+  //buscar en BDD
+  const dbPokemon = await Pokemon.findAll({
+    where: {
+      name: plainName,
+    },
+    include: {
+      model: Types,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+  });
+
+  //buscar en API
+  const apiRaw = (
+    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=10000=offset=0`)
+  ).data.results;
+
+  const pokemonsDetails = await Promise.all(
+    apiRaw.map(async (e) => {
+      const response = (await axios.get(e.url)).data;
+      return response;
+    })
+  );
+
+  //unir resultados
+  const apiPokemons = cleanArray(pokemonsDetails);
+
+  const pokemonFiltered = apiPokemons.filter((el) => {
+    return el.name === plainName;
+  });
+
+  return [...dbPokemon, ...pokemonFiltered];
+};
+
+
+
+module.exports = {
+  getPokemonsByName,
+  getAllPokemons,
+};
