@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Pokemon, Types } = require("../db");
+const { Pokemon, Type } = require("../db");
 const db = require("../db");
 
 
@@ -26,7 +26,7 @@ const getAllPokemons = async () => {
   //buscar BDD
   const dbPokemons = await Pokemon.findAll({
     include: {
-      model: Types,
+      model: Type,
       attributes: ["name"],
       through: {
         attributes: [],
@@ -36,7 +36,7 @@ const getAllPokemons = async () => {
 
   //buscar api
   const apiRaw = (
-    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=10000&offset=0`)
+    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=200&offset=0`)
   ).data.results;
 
   const pokemonDetails = await Promise.all(
@@ -62,7 +62,7 @@ const getPokemonsByName = async (name) => {
       name: plainName,
     },
     include: {
-      model: Types,
+      model: Type,
       attributes: ["name"],
       through: {
         attributes: [],
@@ -72,7 +72,7 @@ const getPokemonsByName = async (name) => {
 
   //buscar en API
   const apiRaw = (
-    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=10000=offset=0`)
+    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=200=offset=0`)
   ).data.results;
 
   const pokemonsDetails = await Promise.all(

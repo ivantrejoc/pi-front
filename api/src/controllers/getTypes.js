@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Types } = require("../db");
+const { Type } = require("../db");
 
 //TRAER LOS TYPES DE LA API
 const getTypes = async () => {
@@ -10,7 +10,7 @@ const getTypes = async () => {
   //GUARDAR LOS TYPES EL BDD
 
   apiTypes.forEach((type) => {
-    Types.findOrCreate({
+    Type.findOrCreate({
       where: {
         name: type,
       },
@@ -18,7 +18,7 @@ const getTypes = async () => {
   });
 
   //RETORNA TYPES DESDE BDD
-  const dbTypes = await Types.findAll();
+  const dbTypes = await Type.findAll();
   return dbTypes
 };
 

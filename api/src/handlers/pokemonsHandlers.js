@@ -18,20 +18,21 @@ const getPokemonsHandler = async (req, res) => {
       res.status(200).json(results)
       : res.status(404).json("Pokemon no existe");
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
 const getPokemonByIdHandler = async (req, res) => {
   const { id } = req.params;
+
   const source = isNaN(id) ? "bdd" : "api"
   try {
     const pokemon = await getPokemonById(id, source);
-   
-        res.status(200).json(pokemon);
+    pokemon ? res.status(200).json(pokemon)
+    : res.status(404).json("Pokemon no existe");
         
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -41,16 +42,17 @@ const getTypesHandler = async (req, res) => {
     const types = await getTypes();
     res.status(200).json(types);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   };
 };
 
 const createPokemonHandler = async (req, res) => {
   try {
-    const { id, name, sprites, life, attack, defense, speed, height, weight } =
+    const {  name, sprites, life, attack, defense, speed, height, weight, types } =
       req.body;
+    
     const newPokemon = await createPokemon(
-      id,
+      
       name,
       sprites,
       life,
@@ -58,7 +60,8 @@ const createPokemonHandler = async (req, res) => {
       defense,
       speed,
       height,
-      weight
+      weight,
+      types
     );
     return res.status(201).json(newPokemon);
   } catch (error) {
