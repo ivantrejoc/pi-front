@@ -4,13 +4,14 @@ import "./cardsContainer.css";
 import { useSelector } from "react-redux";
 
 const CardsContainer = () => {
-  //TRAEMOS EL ESTADO GLOBAL DE REDUX
-  const pokemons = useSelector((state) => state.allPokemons);
-  // console.log(pokemons.id);
+  const pokemonByName = useSelector((state) => state.pokemonByName);
+  const allPokemons = useSelector((state) => state.allPokemons);
+
+  const pokemonList = pokemonByName.length > 0 ? pokemonByName : allPokemons;
 
   return (
     <div className="cardsContainer">
-      {pokemons?.map((pokemon) => {
+      {pokemonList?.map((pokemon) => {
         return (
           <div>
             <Card

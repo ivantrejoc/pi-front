@@ -1,36 +1,36 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { getPokemonByName } from "../../redux/actions";
 import "./searchBar.css";
 
-const SearchBar = () => {
-  const [input, setInput] = useState("");
+const SearchBar = (props) => {
+  const [nameTosearch, setNameToSearch] = useState("");
 
   const handleInputChange = (event) => {
     event.preventDefault();
     const { value } = event.target;
-    setInput(value);
+    setNameToSearch(value);
   };
 
   const dispatch = useDispatch();
-//   const pokemonDetail = useSelector((state) => state.pokemonByName);
-
-  const handleClick = () => {
-    dispatch(getPokemonByName(input));
-    setInput("");
-  };
-
+  //   const pokemonDetail = useSelector((state) => state.pokemonByName);
   
+  const handleSearch= () => {
+    dispatch(getPokemonByName(nameTosearch));
+     };
+
+      
+
   return (
     <div>
       <p>
         <input
-          type="search"
-          value={input}
+          type="text"
+          value={nameTosearch}
           onChange={handleInputChange}
           placeholder="Buscar Pokemon..."
         />
-        <button onClick={handleClick}>Buscar</button>
+        <button onClick={handleSearch}>Buscar</button>
       </p>
     </div>
   );

@@ -28,6 +28,12 @@ import {
               pokemonById: action.payload,
             };
 
+            case GET_POKEMON_BY_NAME:
+            return {
+              ...state,                          
+              pokemonByName: action.payload,
+            };
+
         default:
     return {...state};
    };
