@@ -1,0 +1,18 @@
+.formContainer{
+    display: flex;
+  position: absolute;
+  flex-direction: column;
+  width: 40%;
+  margin-left: 30%;
+  margin-right: 30%;
+  margin-bottom: 20px;
+  align-items: center;
+  background: #84898b;
+  border: solid #39ff14 1px;
+  border-radius: 20px;
+  padding: 20px;
+  cursor: pointer;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  transition: transform 0.25s ease-out;
+}

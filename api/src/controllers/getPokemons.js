@@ -36,7 +36,7 @@ const getAllPokemons = async () => {
 
   //buscar api
   const apiRaw = (
-    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=200&offset=0`)
+    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=20&offset=0`)
   ).data.results;
 
   const pokemonDetails = await Promise.all(

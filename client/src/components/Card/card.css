@@ -1,4 +1,20 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #b6cbd1;
+  border: solid #39ff14 1px;
+  border-radius: 20px;
+  background-position: center;
+  width: 100%;
+  padding: 20px;
+  cursor: pointer;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  transition: transform 0.25s ease-out;
+}
 
-.card{
-    border:solid black 3px;
+.imageSize {
+  width: 300 px;
+  height: 300 px;
 }

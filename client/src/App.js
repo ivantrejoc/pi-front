@@ -13,20 +13,13 @@ function App() {
       <Routes>
       <Route exact path="/" element={<Landing />} />
       <Route exact path="/home" element={<Home />} />
-      <Route exact path="/detail" element={<Detail />} />
+      <Route exact path="/detail/:id" element={<Detail />} />
       <Route exact path="/create" element={<Form />} />        
       </Routes>
     </div>
   );
 }
 
-//VIEWS
-//* Landing page
-//* Home renderiza una serie de personajes (contiene nav bar + serie de cards)
-//* Detail: cuando se hace click sobre un personaje, muestra los detalles de este personaje
-//* Form que crea un nuevo personaje
 
-//COMPONENTES:
-//*
 
 export default App;

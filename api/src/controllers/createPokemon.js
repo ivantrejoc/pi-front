@@ -27,7 +27,7 @@ const createPokemon = async (
         
          const dbTypes = await Type.findAll({
            where: {
-             id: types
+             name: types
            }
          });
    
