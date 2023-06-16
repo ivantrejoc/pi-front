@@ -2,9 +2,9 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import CardsContainer from "../../components/CardsContainer/CardsContainer";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getPokemons, filterByTypes } from "../../redux/actions";
+import { getPokemons, filterByTypes, filterByStorage, sortPokemons, } from "../../redux/actions";
 
-const Home = ({ cardsPerPage, pagination }) => {
+const Home = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -15,13 +15,26 @@ const Home = ({ cardsPerPage, pagination }) => {
     e.preventDefault();
     dispatch(getPokemons());
   }
+
+  function handleTypeFilter(e) {
+    e.preventDefault();
+    dispatch(filterByTypes(e.target.value));
+  }
+
+  function handleStorageFilter(e) {
+    e.preventDefault();
+    dispatch(filterByStorage(e.target.value));
+  }
+
+  function handleSort(e) {
+    e.preventDefault();
+    dispatch(sortPokemons(e.target.value));
+  }
+
   return (
     <div>
       <div className="filters">
-        <select
-          name="filterbytypes"
-          onClick={(e) => dispatch(filterByTypes(e.target.value))}
-        >
+        <select name="filterbytypes" onClick={(e) => handleTypeFilter(e)}>
           <option value="todos">Todos</option>
           <option value="normal">normal</option>
           <option value="fighting">fighting</option>
@@ -45,17 +58,17 @@ const Home = ({ cardsPerPage, pagination }) => {
           <option value="shadow">shadow</option>
         </select>
 
-        <select name="filterByOrigin">
+        <select name="filterByOrigin" onClick={(e) => handleStorageFilter(e)}>
           <option value="api">Api</option>
-          <option value="dataBase">Data Base</option>
+          <option value="created">Data Base</option>
         </select>
 
-        <select name="sort">
-          <option value="ascendente">Ascendente</option>
-          <option value="descendente">Descendente</option>
+        <select name="sort" onChange={(e) => handleSort(e)}>
+          <option value="asc">Ascendente</option>
+          <option value="des">Descendente</option>
         </select>
       </div>
-
+      
       <SearchBar />
       <h1>Esta es la vista de home</h1>
       <button onClick={(e) => handleClick(e)}>Recargar</button>

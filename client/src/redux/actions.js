@@ -55,16 +55,23 @@ export const getPokemonByName = (name) => {
   };
 };
 
-export const filterByTypes = (types) => {
+export const filterByTypes = (payload) => {
   return {
     type: FILTER_POKEMONS_BY_TYPE,
-    payload: types,
+    payload,
   };
 };
 
-export const filterByStorage = (origin) => {
+export const filterByStorage = (payload) => {
   return {
     type: FILTER_POKEMONS_BY_STORAGE,
-    payload: origin,
+    payload,
+  };
+};
+
+export const sortPokemons = (payload) => {
+  return {
+    type: SORT_POKEMONS,
+    payload,
   };
 };
