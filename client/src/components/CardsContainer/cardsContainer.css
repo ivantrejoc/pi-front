@@ -1,4 +1,4 @@
-.cardsContainer {
+.container {
   width: 85vw;
   margin-bottom: 30px;
   display: grid;
@@ -6,3 +6,8 @@
   grid-gap: 70px;
   align-content: end;
 }
+
+.paginated{
+  display: grid;
+}
+

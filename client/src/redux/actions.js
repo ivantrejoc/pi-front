@@ -3,9 +3,11 @@ import {
   GET_POKEMONS,
   GET_POKEMON_BY_NAME,
   GET_POKEMON_BY_ID,
+  GET_TYPES,
   FILTER_POKEMONS_BY_TYPE,
-  FILTER_POKEMONS_BY_STORAGE,
   SORT_POKEMONS,
+  SORT_POKEMONS_BY_ATTACK,
+  FILTER_POKEMONS_BY_ORIGIN
 } from "./action-types";
 
 export const getPokemons = () => {
@@ -16,6 +18,21 @@ export const getPokemons = () => {
       return dispatch({
         type: GET_POKEMONS,
         payload: pokemons,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const getTypes = () => {
+  return async (dispatch) => {
+    try {
+      const types = await axios.get(`http://localhost:3001/types`, {});
+      const typesData = types.data;
+      return dispatch({
+        type: GET_TYPES,
+        payload: typesData,
       });
     } catch (error) {
       console.log(error);
@@ -62,9 +79,9 @@ export const filterByTypes = (payload) => {
   };
 };
 
-export const filterByStorage = (payload) => {
+export const filterByOrigin = (payload) => {
   return {
-    type: FILTER_POKEMONS_BY_STORAGE,
+    type: FILTER_POKEMONS_BY_ORIGIN,
     payload,
   };
 };
@@ -72,6 +89,13 @@ export const filterByStorage = (payload) => {
 export const sortPokemons = (payload) => {
   return {
     type: SORT_POKEMONS,
+    payload,
+  };
+};
+
+export const sortPokemonsByAttack = (payload) => {
+  return {
+    type: SORT_POKEMONS_BY_ATTACK,
     payload,
   };
 };

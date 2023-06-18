@@ -50,7 +50,7 @@ const createPokemonHandler = async (req, res) => {
   try {
     const {  name, sprites, life, attack, defense, speed, height, weight, types } =
       req.body;
-    
+     
     const newPokemon = await createPokemon(
       
       name,

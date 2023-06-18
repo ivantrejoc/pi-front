@@ -9,38 +9,33 @@ const createPokemon = async (
   speed,
   height,
   weight,
-  types,
+  types
 ) => {
+  const inputs = {
+    name,
+    sprites,
+    life,
+    attack,
+    defense,
+    speed,
+    height,
+    weight,
+  };
+
   try {
-    const obj = {
-      name,
-     sprites,
-     life,
-     attack,
-     defense,
-     speed,
-     height,
-     weight,
-     }
-     console.log(obj);
-     const newPokemon = await Pokemon.create(obj);
-        
-         const dbTypes = await Type.findAll({
-           where: {
-             name: types
-           }
-         });
-   
-        return newPokemon.addType(dbTypes);
-   
-    
+    const newPokemon = await Pokemon.create(inputs);
+
+    const dbTypes = await Type.findAll({
+      where: {
+        name: types,
+      },
+    });
+
+    await newPokemon.addType(dbTypes);
+    return newPokemon;
   } catch (error) {
     console.log(error.message);
   }
- 
-    
-
-
 };
 
 module.exports = createPokemon;

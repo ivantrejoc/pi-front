@@ -2,7 +2,9 @@ import SearchBar from "../../components/SearchBar/SearchBar";
 import CardsContainer from "../../components/CardsContainer/CardsContainer";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getPokemons, filterByTypes, filterByStorage, sortPokemons, } from "../../redux/actions";
+import { getPokemons, filterByTypes, filterByOrigin, sortPokemons, sortPokemonsByAttack } from "../../redux/actions";
+
+
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -11,6 +13,7 @@ const Home = () => {
     dispatch(getPokemons());
   }, [dispatch]);
 
+  
   function handleClick(e) {
     e.preventDefault();
     dispatch(getPokemons());
@@ -21,15 +24,21 @@ const Home = () => {
     dispatch(filterByTypes(e.target.value));
   }
 
-  function handleStorageFilter(e) {
+  function handleOriginFilter(e) {
     e.preventDefault();
-    dispatch(filterByStorage(e.target.value));
+    dispatch(filterByOrigin(e.target.value));
   }
 
   function handleSort(e) {
     e.preventDefault();
     dispatch(sortPokemons(e.target.value));
   }
+
+  function handleSortByAttack(e) {
+    e.preventDefault();
+    dispatch(sortPokemonsByAttack(e.target.value));
+  }
+  
 
   return (
     <div>
@@ -58,16 +67,22 @@ const Home = () => {
           <option value="shadow">shadow</option>
         </select>
 
-        <select name="filterByOrigin" onClick={(e) => handleStorageFilter(e)}>
+        <select name="filterByOrigin" onClick={(e) => handleOriginFilter(e)}>
           <option value="api">Api</option>
           <option value="created">Data Base</option>
         </select>
+               
 
         <select name="sort" onChange={(e) => handleSort(e)}>
           <option value="asc">Ascendente</option>
           <option value="des">Descendente</option>
         </select>
-      </div>
+
+        <select name="sortByAttack" onClick={(e) => handleSortByAttack(e)}>
+          <option value="more">more strong</option>
+          <option value="less">less strong</option>
+        </select>
+      </div>     
       
       <SearchBar />
       <h1>Esta es la vista de home</h1>

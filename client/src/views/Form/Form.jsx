@@ -1,9 +1,13 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch} from "react-redux"; 
 import validation from "./validation";
+import {getTypes} from "../../redux/actions";
 import "./form.css";
 import axios from "axios";
 
 const Form = () => {
+  const dispatch = useDispatch();
+  // const types = useSelector((state)=> state.types)
   const [input, setInput] = useState({
     name: "",
     sprites: "",
@@ -13,7 +17,7 @@ const Form = () => {
     speed: "",
     height: "",
     weight: "",
-    types: "",
+    types: [],
   });
 
   const [errors, setErrors] = useState({
@@ -26,6 +30,10 @@ const Form = () => {
     height: "",
     weight: "",
   });
+
+  useEffect(() => {
+    dispatch(getTypes());
+  }, [dispatch]);
 
   const changeHandler = (event) => {
     //CONTROLA EL FORMULARIO
@@ -52,7 +60,7 @@ const Form = () => {
       .then((res) => alert(res))
       .catch((err) => alert(err));
   };
-
+  
   return (
     <div>
       <h1> ESTA ES MI VISTA DE FORM</h1>
@@ -164,6 +172,12 @@ const Form = () => {
 
         <div>
           <label>Types:</label>
+          {/* <select onChange={typeSelectHandler}>
+            {types?.map((t)=>{
+              return(
+              <option key={t.name} value={t.name} name ="type" >{t.name}</option>)
+            })}
+          </select> */}
           <input
             type="checkbox"
             id="1"

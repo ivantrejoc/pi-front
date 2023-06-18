@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import Card from "../Card/Card";
 import "./cardsContainer.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 import Pagination from "../../components/Pagination/Pagination";
 
 const CardsContainer = () => {
@@ -24,21 +25,21 @@ const CardsContainer = () => {
     pokemonByName.length > 0 ? pokemonByName : currentPokemons;
 
   return (
-    <div className="cardsContainer">
-      {pokemonList?.map((pokemon) => {
-        return (
-          <div>
+    <div className="container">
+      
+      {pokemonList?.map((pokemon) =>  (
+          <div key={pokemon.id}>
             <Card
               key={pokemon.id}
               id={pokemon.id}
               name={pokemon.name}
               sprites={pokemon.sprites}
-              types={pokemon.types}
+              types={pokemon.types.join(" - ")}
             />
           </div>
-        );
-      })}
-      <div>
+        ))}
+
+<div className="paginated">
         <Pagination
           cardsPerPage={cardsPerPage}
           allPokemons={allPokemons.length}

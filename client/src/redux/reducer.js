@@ -3,16 +3,19 @@ import {
   GET_POKEMON_BY_NAME,
   GET_POKEMON_BY_ID,
   FILTER_POKEMONS_BY_TYPE,
-  FILTER_POKEMONS_BY_STORAGE,
+  FILTER_POKEMONS_BY_ORIGIN,
   SORT_POKEMONS,
+  SORT_POKEMONS_BY_ATTACK,
+  GET_TYPES,
 } from "./action-types";
-import { filterByStorage } from "./actions";
+
 
 const initialState = {
   allPokemons: [],
   allPokemonsCopy: [],
   pokemonById: [],
   pokemonByName: [],
+  types: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -36,45 +39,70 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case FILTER_POKEMONS_BY_TYPE:
-      const allPokemonsCopy = state.allPokemonsCopy;
+      const pokemonsCopy = state.allPokemonsCopy;
       const filteredByType =
         action.payload === "todos"
-          ? allPokemonsCopy
-          : allPokemonsCopy.filter((e) => e.types === action.payload);
-
-      return {
+          ? pokemonsCopy
+          : pokemonsCopy.filter((e) =>
+              e.types.find((e) => e === action.payload)
+            );
+            return {
         ...state,
         allPokemons: filteredByType,
       };
 
-    //para este caso debo crear un flag en la base de datos que me diga si es creado o de api
-    // case FILTER_POKEMONS_BY_STORAGE:
-    //   const pokemonsCopy = state.allPokemonsCopy;
-    //   const filteredByStorage = action.payload === "created"?
-    //   ? pokemonsCopy
-    //   :
+    case FILTER_POKEMONS_BY_ORIGIN:
+      const pokemonsCopy2 = state.allPokemonsCopy;
+      const filteredByOrigin =
+      action.payload === "created"
+      ? pokemonsCopy2.filter((e) => isNaN(e.id))
+      : pokemonsCopy2.filter((e) => !isNaN(e.id));
+
+      console.log(filteredByOrigin);
+      return {
+        ...state,
+        allPokemons: filteredByOrigin,
+      };
+
+    case GET_TYPES:
+      return {
+        ...state,
+        types: action.payload,
+      };
 
     case SORT_POKEMONS:
+      const order = [...state.allPokemonsCopy];
+      const sortedPokemons = order.sort((a, b) => {
+        if (a.name > b.name) {
+          return action.payload === "asc" ? 1 : -1;
+        }
+        if (a.name < b.name) {
+          return action.payload === "des" ? 1 : -1;
+        } else return 0;
+      });
 
-    const order = [...state.allPokemonsCopy];
-    const sortedPokemons = order.sort((a,b)=>{
-      if(a.name > b.name){
-        return action.payload === "asc" 
-        ? 1
-        :-1
-        
-      } if(a.name < b.name){
-        return action.payload === "des"
-        ? 1
-        :-1
-      } else return 0;
-    })
-    
-    return {
-      ...state,
-      allPokemons: sortedPokemons
-    };
-      
+      return {
+        ...state,
+        allPokemons: sortedPokemons,
+      };
+
+      case SORT_POKEMONS_BY_ATTACK:
+      const orderAttack = [...state.allPokemonsCopy];
+      const sortedPokemonsAttack = orderAttack.sort((a, b) => {
+        if (a.attack > b.attack) {
+          return action.payload === "more" ? 1 : -1;
+        }
+        if (a.attack < b.attack) {
+          return action.payload === "less" ? 1 : -1;
+        } else return 0;
+      });
+
+      return {
+        ...state,
+        allPokemons: sortedPokemonsAttack,
+      };
+
+
     default:
       return { ...state };
   }

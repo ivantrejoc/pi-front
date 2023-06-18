@@ -9,7 +9,7 @@ const cleanArray = (arr) => {
     return {
       id: e.id,
       name: e.name,
-      sprites: e.sprites.front_default, 
+      sprites: e.sprites.other.dream_world.front_default, 
       life: e.stats[0].base_stat,
       attack: e.stats[1].base_stat,
       defense: e.stats[2].base_stat,
@@ -22,9 +22,27 @@ const cleanArray = (arr) => {
   return clean;
 };
 
+const cleanDbArray = (arr) => {
+  const clean = arr.map((e) => {
+    return {
+      id: e.id,
+      name: e.name,
+      sprites: e.sprites, 
+      life: e.life,
+      attack: e.attack,
+      defense: e.defense,
+      speed: e.speed,
+      height: e.height,
+      weight: e.weight,
+      types: e.Types.map((t) => t.name),
+    };
+  });
+  return clean;
+};
+
 const getAllPokemons = async () => {
   //buscar BDD
-  const dbPokemons = await Pokemon.findAll({
+  const createdPokemons = await Pokemon.findAll({
     include: {
       model: Type,
       attributes: ["name"],
@@ -34,6 +52,8 @@ const getAllPokemons = async () => {
     },
   });
 
+  const dbPokemons = cleanDbArray(createdPokemons);
+ 
   //buscar api
   const apiRaw = (
     await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=200&offset=0`)
