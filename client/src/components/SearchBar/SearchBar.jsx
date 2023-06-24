@@ -13,25 +13,34 @@ const SearchBar = (props) => {
   };
 
   const dispatch = useDispatch();
-  //   const pokemonDetail = useSelector((state) => state.pokemonByName);
+  
   
   const handleSearch= () => {
-    dispatch(getPokemonByName(nameTosearch));
+    if(!nameTosearch) {
+      alert("You must type a pokemon name")
+    }else{
+      dispatch(getPokemonByName(nameTosearch))
+      .catch((error)=>{
+        alert("Pokemon not found")
+      })
+    }  
+
      };
 
       
 
   return (
-    <div>
-      <p>
+    <div className="searchCont">
+      
         <input
-          type="text"
-          value={nameTosearch}
+        className="searchInput"
+          type="search"
+          
           onChange={handleInputChange}
           placeholder="Buscar Pokemon..."
         />
-        <button onClick={handleSearch}>Buscar</button>
-      </p>
+        <button className="searchButton" onClick={handleSearch}>Buscar</button>
+     
     </div>
   );
 };

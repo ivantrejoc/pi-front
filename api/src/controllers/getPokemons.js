@@ -34,7 +34,7 @@ const cleanDbArray = (arr) => {
       speed: e.speed,
       height: e.height,
       weight: e.weight,
-      types: e.Types.map((t) => t.name),
+      types: e.dataValues.Types.map((t) => t.name),
     };
   });
   return clean;
@@ -56,7 +56,7 @@ const getAllPokemons = async () => {
  
   //buscar api
   const apiRaw = (
-    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=200&offset=0`)
+    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=60&offset=0`)
   ).data.results;
 
   const pokemonDetails = await Promise.all(
@@ -89,10 +89,10 @@ const getPokemonsByName = async (name) => {
       },
     },
   });
-
+  const dbPokemonClean = cleanDbArray(dbPokemon);
   //buscar en API
   const apiRaw = (
-    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=200=offset=0`)
+    await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=60=offset=0`)
   ).data.results;
 
   const pokemonsDetails = await Promise.all(
@@ -109,7 +109,7 @@ const getPokemonsByName = async (name) => {
     return el.name === plainName;
   });
 
-  return [...dbPokemon, ...pokemonFiltered];
+  return [...dbPokemonClean, ...pokemonFiltered];
 };
 
 

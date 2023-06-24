@@ -6,26 +6,22 @@ const cleanArray = (arr) => {
     return {
       id: e.id,
       name: e.name,
-      sprites: e.sprites.front_default, //revisar como viene de la api las imagenes
+      sprites: e.sprites.other.dream_world.front_default, //revisar como viene de la api las imagenes
       life: e.stats[0].base_stat,
       attack: e.stats[1].base_stat,
       defense: e.stats[2].base_stat,
       speed: e.stats[5].base_stat,
       height: e.height,
       weight: e.weight,
-      type: e.types.map((t) => t.type.name),
+      type: e.types.map((t) => t.type.name).join(" - "),
     };
   });
   return clean;
 };
 
-const getPokemonById = async (id, source) => {
-  
-  if (source === "api") {
-    // const apiPokemon = (
-    //   await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-    // ).data;
 
+const getPokemonById = async (id, source) => {
+  if (source === "api") {
     const apiRaw = (
       await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=200&offset=0`)
     ).data.results;
@@ -38,16 +34,16 @@ const getPokemonById = async (id, source) => {
     );
 
     //ordena resultado
-    const apiPokemons = cleanArray(pokemonsDetails);     
-    
+    const apiPokemons = cleanArray(pokemonsDetails);
+    console.log(apiPokemons);
     const idNumber = Number(id);
-    const pokemonFiltered = apiPokemons.find((el) => el.id === idNumber); 
+    const pokemonFiltered = apiPokemons.find((el) => el.id === idNumber);
     return pokemonFiltered;
   }
 
-  const dbPokemon = await Pokemon.findAll({
+  const dbPokemonRaw = await Pokemon.findOne({
     where: {
-     id: id,
+      id: id,
     },
     include: {
       model: Type,
@@ -57,7 +53,21 @@ const getPokemonById = async (id, source) => {
       },
     },
   });
-  return dbPokemon;
+
+  const dbPokemon = {
+    id: dbPokemonRaw.id,
+    name: dbPokemonRaw.name,
+    sprites: dbPokemonRaw.sprites,
+    life: dbPokemonRaw.life,
+    attack: dbPokemonRaw.attack,
+    defense: dbPokemonRaw.defense,
+    speed: dbPokemonRaw.speed,
+    height: dbPokemonRaw.height,
+    weight: dbPokemonRaw.weight,
+    type: dbPokemonRaw.Types.map((type) => type.name).join(" - "),
+  }
+    
+return dbPokemon;
 };
 
 module.exports = getPokemonById;

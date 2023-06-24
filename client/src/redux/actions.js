@@ -7,8 +7,9 @@ import {
   FILTER_POKEMONS_BY_TYPE,
   SORT_POKEMONS,
   SORT_POKEMONS_BY_ATTACK,
-  FILTER_POKEMONS_BY_ORIGIN
+  FILTER_POKEMONS_BY_ORIGIN,
 } from "./action-types";
+
 
 export const getPokemons = () => {
   return async (dispatch) => {
@@ -50,7 +51,7 @@ export const getPokemonById = (id) => {
         payload: pokemon,
       });
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
 };
@@ -62,12 +63,13 @@ export const getPokemonByName = (name) => {
         `http://localhost:3001/pokemons?name=${name}`
       );
       const pokemon = apiData.data;
+            
       return dispatch({
         type: GET_POKEMON_BY_NAME,
         payload: pokemon,
       });
     } catch (error) {
-      console.log(error);
+      throw error;
     }
   };
 };

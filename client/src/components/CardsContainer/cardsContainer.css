@@ -1,13 +1,13 @@
 .container {
   width: 85vw;
-  margin-bottom: 30px;
+  margin-top: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 70px;
+  row-gap: 30px;
+  grid-gap: 50px;
   align-content: end;
 }
 
-.paginated{
+.paginated {
   display: grid;
 }
-

@@ -8,31 +8,43 @@ const Detail = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(getPokemonById(id));
   }, [dispatch]);
+
   const pokemonDetail = useSelector((state) => state.pokemonById);
   const { name, sprites, life, attack, defense, speed, height, weight, type } =
     pokemonDetail;
+
+    
+
+   
+  
   const navigate = useNavigate();
 
   return (
-    <div className="detailContent">
-      <h1>Detalles</h1>
+    <div className="background">
+      <div></div>
+      <div className="detailContent">
+        <div className="main">
+          <h1 className="detailName">{name}</h1>
+          <img className="image" src={sprites} alt={name} />
+        </div>
 
-      <div>
-        <h1>Name: {name}</h1>
-        <img src={sprites} alt={name} />
-        <h2>Life: {life}</h2>
-        <h2>Attack: {attack} </h2>
-        <h2>Defense:{defense} </h2>
-        <h2>Speed: {speed} </h2>
-        <h2>Height: {height} </h2>
-        <h2>Weight: {weight}</h2>
-        <h2>Types: {type}</h2>
+        <div className="cardDetail">
+          <h2>Life: {life}</h2>
+          <h2>Attack: {attack} </h2>
+          <h2>Defense: {defense} </h2>
+          <h2>Speed: {speed} </h2>
+          <h2>Height: {height} </h2>
+          <h2>Weight: {weight}</h2>
+          <h2>Types: {type}</h2>
+        </div>
       </div>
 
       <button
+        className="buttonBack"
         onClick={() => {
           navigate("/Home");
         }}

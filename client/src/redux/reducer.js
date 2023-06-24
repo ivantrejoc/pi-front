@@ -31,7 +31,7 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         pokemonById: action.payload,
       };
-
+      
     case GET_POKEMON_BY_NAME:
       return {
         ...state,
@@ -57,8 +57,7 @@ const rootReducer = (state = initialState, action) => {
       action.payload === "created"
       ? pokemonsCopy2.filter((e) => isNaN(e.id))
       : pokemonsCopy2.filter((e) => !isNaN(e.id));
-
-      console.log(filteredByOrigin);
+     
       return {
         ...state,
         allPokemons: filteredByOrigin,
