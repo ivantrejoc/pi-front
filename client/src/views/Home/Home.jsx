@@ -9,21 +9,21 @@ import {
   filterByOrigin,
   sortPokemons,
   sortPokemonsByAttack,
+  clearPokemonByName
+  
 } from "../../redux/actions";
 import Pagination from "../../components/Pagination/Pagination";
 import "./home.css";
 
 const Home = () => {
   const dispatch = useDispatch();
+    const [showCardsContainer, setShowCardsContainer] = useState(true);
 
   useEffect(() => {
     dispatch(getPokemons());
   }, [dispatch]);
 
-  function handleClick(e) {
-    e.preventDefault();
-    dispatch(getPokemons());
-  }
+  
 
   function handleTypeFilter(e) {
     e.preventDefault();
@@ -44,6 +44,11 @@ const Home = () => {
     e.preventDefault();
     dispatch(sortPokemonsByAttack(e.target.value));
   }
+
+  function handleClick(e) {
+    e.preventDefault();
+    dispatch(clearPokemonByName());    
+  };
 
   const allPokemons = useSelector((state) => state.allPokemons);
   const [currentPage, setCurrentPage] = useState(1); //inicia paginado en 1
@@ -118,11 +123,10 @@ const Home = () => {
             <option value="more">more strong</option>
             <option value="less">less strong</option>
           </select>
-        </div>
-
-        <button className="reload" onClick={(e) => handleClick(e)}>
-          Recargar
-        </button>
+        </div> 
+        <button className="reload" onClick={(e)=>handleClick(e)}>
+          Reload
+        </button>       
         <SearchBar />
       </div>
 
@@ -134,7 +138,7 @@ const Home = () => {
         />
       </div>
       <div className="cardsContainer">
-        <CardsContainer pokemons={currentPokemons} />
+      {showCardsContainer && <CardsContainer pokemons={currentPokemons} />}
       </div>
     </div>
   );

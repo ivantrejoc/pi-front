@@ -7,6 +7,7 @@ import {
   SORT_POKEMONS,
   SORT_POKEMONS_BY_ATTACK,
   GET_TYPES,
+  CLEAR_POKEMON_BY_NAME
 } from "./action-types";
 
 
@@ -94,11 +95,17 @@ const rootReducer = (state = initialState, action) => {
         if (a.attack < b.attack) {
           return action.payload === "less" ? 1 : -1;
         } else return 0;
-      });
+      });     
 
       return {
         ...state,
         allPokemons: sortedPokemonsAttack,
+      };
+
+      case CLEAR_POKEMON_BY_NAME:
+      return {
+        ...state,
+        pokemonByName: [], // Limpia el estado a un array vacío
       };
 
 

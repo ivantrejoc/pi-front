@@ -8,6 +8,7 @@ import {
   SORT_POKEMONS,
   SORT_POKEMONS_BY_ATTACK,
   FILTER_POKEMONS_BY_ORIGIN,
+  CLEAR_POKEMON_BY_NAME
 } from "./action-types";
 
 
@@ -21,7 +22,7 @@ export const getPokemons = () => {
         payload: pokemons,
       });
     } catch (error) {
-      console.log(error);
+      throw(error);
     }
   };
 };
@@ -36,7 +37,7 @@ export const getTypes = () => {
         payload: typesData,
       });
     } catch (error) {
-      console.log(error);
+      throw(error);
     }
   };
 };
@@ -101,3 +102,11 @@ export const sortPokemonsByAttack = (payload) => {
     payload,
   };
 };
+
+export const clearPokemonByName = (payload) => {
+  return {
+    type: "CLEAR_POKEMON_BY_NAME",
+    payload,
+  };
+};
+

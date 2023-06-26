@@ -2,14 +2,13 @@ import React from "react";
 import Card from "../Card/Card";
 import "./cardsContainer.css";
 import { useSelector } from "react-redux";
-import { useState } from "react";
-import Pagination from "../../components/Pagination/Pagination";
 
 const CardsContainer = ({ pokemons }) => {
   const pokemonByName = useSelector((state) => state.pokemonByName);
 
   const pokemonList = pokemonByName.length > 0 ? pokemonByName : pokemons;
 
+  
   return (
     <div className="container">
       {pokemonList?.map((pokemon) => (

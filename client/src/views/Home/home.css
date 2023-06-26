@@ -1,15 +1,16 @@
 .home {
   position: relative;
-  top: 10;
+  top: 0;
+  bottom: 0;
   left: 0;
-  right: 0; 
+  right: 0;
   width: 100vw;
-  height: 220vh; 
-  background: url("../../assets/background2.jpg");
-  background-attachment: inherit;
-  background-size:auto;
-  background-position: center;
+  height: fit-content;
+  background-image: url("../../assets/background2.jpg");
   background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .barContainer {
@@ -17,6 +18,7 @@
   background-color: #6495ed;
   justify-content: space-between;
   align-items: center;
+  height: 15vh;
   padding-top: 30px;
   margin-bottom: 20px;
   z-index: 999;
@@ -59,19 +61,17 @@
 }
 
 .reload:hover {
-    background-color: #d32f2f;
-  }
+  background-color: #d32f2f;
+}
 
 .select {
   margin-left: 10px;
 }
 
-
-
 .paginated {
   display: flex;
+  flex-direction: row;
   justify-content: center;
-  margin-bottom: 20px;
 }
 
 .cardsContainer {

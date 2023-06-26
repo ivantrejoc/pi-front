@@ -13,12 +13,12 @@ if(input.name.length > 20){
     errors.name = "El nombre de tu Pokemon es muy largo"
 }
 
-// if(input.sprites ===""){
-//     errors.sprites = "Ingresa la url de la imagen de tu Pokemon"
-// }
-// if(! /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(input.sprites)){
-//     errors.sprites = "Ingresa una URL válida"
-// }
+if(input.sprites ===""){
+    errors.sprites = "Ingresa la url de la imagen de tu Pokemon"
+}
+if(! /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/.test(input.sprites)){
+    errors.sprites = "Ingresa una URL válida"
+}
 
 if(input.life ===""){
     errors.life = "Ingresa un número"

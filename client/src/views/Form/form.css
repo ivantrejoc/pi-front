@@ -2,7 +2,9 @@
   position: absolute;
   top: 10;
   left: 0;
-  right: 0;  
+  right: 0; 
+  width: 100vw;
+  height: fit-content; 
   background: url("../../assets/background2.jpg");
   background-attachment: inherit;
   background-size: cover;

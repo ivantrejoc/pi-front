@@ -110,10 +110,11 @@ const Form = () => {
               className="largeInput"
               type="text"
               name="sprites"
-              value="https://svgsilh.com/svg/1574006.svg"
+              value={input.sprites}
               onChange={changeHandler}
             />
           </div>
+          {errors.sprites ? <span className="errors">{errors.sprites}</span> : null}
 
           <div className="statsInputs">
             <label className="labels">Life:</label>
